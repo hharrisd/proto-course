@@ -5,6 +5,7 @@ import proto.complex_pb2 as complex_pb2
 import proto.enumerations_pb2 as enumerations_pb2
 import proto.oneofs_pb2 as oneofs_pb2
 import proto.maps_pb2 as maps_pb2
+import proto.addressbook_pb2 as addressbook_pb2
 
 
 def simple():
@@ -69,12 +70,32 @@ def file(message):
 
 
 def to_json(message):
-    return json_format.MessageToJson(message=message, indent=None, preserving_proto_field_name=True)
+    return json_format.MessageToJson(message=message, indent=3, preserving_proto_field_name=True)
 
 
 def from_json(json_str, type):
     return json_format.Parse(text=json_str, message=type(), ignore_unknown_fields=True)
 
+
+def fill_addressbook():
+    addressbook = addressbook_pb2.AddressBook()
+
+    person1 = addressbook.people.add()
+    person1.id=1
+    person1.name="Beto" 
+    person1.email="beto@proto.com"
+    person1.phones.add(number="9921614", type=addressbook_pb2.Person.PhoneType.WORK)
+    person1.phones.add(number="8722298", type = addressbook_pb2.Person.PhoneType.HOME)
+
+
+    person2 = addressbook.people.add()
+    person2.id=2
+    person2.name="Loki" 
+    person2.email="loki@proto.com"
+    person2.phones.add(number="2020", type = addressbook_pb2.Person.PhoneType.MOBILE)
+    person2.phones.add(number="3030", type = addressbook_pb2.Person.PhoneType.HOME)
+
+    return addressbook
 
 
 if __name__ == "__main__":
@@ -90,10 +111,15 @@ if __name__ == "__main__":
     # maps()
     # file(simple())
 
-    json_str = to_json(complex())
-    print(json_str)
+    # json_str = to_json(complex())
+    # print(json_str)
 
-    print(from_json(json_str, complex_pb2.Complex))
+    # print(from_json(json_str, complex_pb2.Complex))
     
-    print("Testing the unknow fields are ignored: ")
-    print(from_json('{"id": 42, "unknown": "test"}', simple_pb2.Simple))
+    # print("Testing the unknow fields are ignored: ")
+    # print(from_json('{"id": 42, "unknown": "test"}', simple_pb2.Simple))
+
+    # AddressBook Exercise
+    print(fill_addressbook())
+
+    print(to_json(fill_addressbook()))
