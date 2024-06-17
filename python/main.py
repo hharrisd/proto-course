@@ -1,6 +1,7 @@
 import proto.simple_pb2 as simple_pb2
 import proto.complex_pb2 as complex_pb2
 import proto.enumerations_pb2 as enumerations_pb2
+import proto.oneofs_pb2 as oneofs_pb2
 
 
 def simple():
@@ -30,6 +31,15 @@ def enums():
         # color = 3  # Using ordinal number (the tag number in .proto file) Is not explicit
     )
 
+
+def oneofs():
+    message  = oneofs_pb2.Result(message="a message")
+    print(message)
+
+    message.id = 42
+    print(message)
+
+
 if __name__ == "__main__":
     print("Simple message:")
     print(simple())
@@ -37,3 +47,5 @@ if __name__ == "__main__":
     print(complex())
     print("Enums:")
     print(enums())
+    print("OneOfs:")
+    oneofs()
