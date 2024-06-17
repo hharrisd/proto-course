@@ -2,6 +2,7 @@ import proto.simple_pb2 as simple_pb2
 import proto.complex_pb2 as complex_pb2
 import proto.enumerations_pb2 as enumerations_pb2
 import proto.oneofs_pb2 as oneofs_pb2
+import proto.maps_pb2 as maps_pb2
 
 
 def simple():
@@ -40,12 +41,23 @@ def oneofs():
     print(message)
 
 
+def maps():
+    message = maps_pb2.MapExample()
+    message.ids["myid"].id = 42
+    message.ids["myid2"].id = 43
+    message.ids["myid3"].id = 44
+
+    print(message)
+
+
 if __name__ == "__main__":
-    print("Simple message:")
-    print(simple())
-    print('Complex message:')
-    print(complex())
-    print("Enums:")
-    print(enums())
-    print("OneOfs:")
-    oneofs()
+    # print("Simple message:")
+    # print(simple())
+    # print('Complex message:')
+    # print(complex())
+    # print("Enums:")
+    # print(enums())
+    # print("OneOfs:")
+    # oneofs()
+    print("Maps:")
+    maps()

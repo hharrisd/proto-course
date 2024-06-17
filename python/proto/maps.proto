@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package example.maps;
+
+message IdWraper {
+    uint32 id = 1;
+}
+
+message MapExample {
+    map<string, IdWraper> ids = 1;
+}
