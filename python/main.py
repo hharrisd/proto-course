@@ -1,3 +1,5 @@
+import google.protobuf.json_format as json_format
+
 import proto.simple_pb2 as simple_pb2
 import proto.complex_pb2 as complex_pb2
 import proto.enumerations_pb2 as enumerations_pb2
@@ -65,6 +67,16 @@ def file(message):
         message2 = t().FromString(f.read())
     print(message2)
 
+
+def to_json(message):
+    return json_format.MessageToJson(message=message, indent=None, preserving_proto_field_name=True)
+
+
+def from_json(json_str, type):
+    return json_format.Parse(text=json_str, message=type(), ignore_unknown_fields=True)
+
+
+
 if __name__ == "__main__":
     # print("Simple message:")
     # print(simple())
@@ -76,4 +88,12 @@ if __name__ == "__main__":
     # oneofs()
     # print("Maps:")
     # maps()
-    file(simple())
+    # file(simple())
+
+    json_str = to_json(complex())
+    print(json_str)
+
+    print(from_json(json_str, complex_pb2.Complex))
+    
+    print("Testing the unknow fields are ignored: ")
+    print(from_json('{"id": 42, "unknown": "test"}', simple_pb2.Simple))
