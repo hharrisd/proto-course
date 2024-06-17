@@ -50,6 +50,21 @@ def maps():
     print(message)
 
 
+def file(message):
+    path = "simple.bin"
+
+    print("Write to a file")
+    print(message)
+    with open(path, "wb") as f:
+        bytes_as_str = message.SerializeToString()
+        f.write(bytes_as_str)
+
+    print("Read from file")
+    with open(path, "rb") as f:
+        t = type(message)
+        message2 = t().FromString(f.read())
+    print(message2)
+
 if __name__ == "__main__":
     # print("Simple message:")
     # print(simple())
@@ -59,5 +74,6 @@ if __name__ == "__main__":
     # print(enums())
     # print("OneOfs:")
     # oneofs()
-    print("Maps:")
-    maps()
+    # print("Maps:")
+    # maps()
+    file(simple())
